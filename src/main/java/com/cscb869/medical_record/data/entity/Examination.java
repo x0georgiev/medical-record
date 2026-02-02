@@ -6,6 +6,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.util.Set;
 
 @Entity
 @Table(name = "examinations")
@@ -35,11 +36,10 @@ public class Examination extends BaseEntity {
     @JoinColumn(name = "diagnosis_id", nullable = false)
     private Diagnosis diagnosis;
 
-    @Column(name = "treatment", length = 2000)
-    private String treatment;
-
-    @Column(name = "notes", length = 2000)
-    private String notes;
+    // Prescriptions (medicines) for this examination
+    @OneToMany(mappedBy = "examination", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
+    private Set<Prescription> prescriptions;
 
     // One examination can have at most one sick leave
     @OneToOne(mappedBy = "examination", cascade = CascadeType.ALL, orphanRemoval = true)
