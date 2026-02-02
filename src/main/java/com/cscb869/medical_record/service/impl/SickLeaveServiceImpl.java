@@ -6,6 +6,8 @@ import com.cscb869.medical_record.data.repo.ExaminationRepository;
 import com.cscb869.medical_record.data.repo.SickLeaveRepository;
 import com.cscb869.medical_record.dto.CreateSickLeaveDTO;
 import com.cscb869.medical_record.dto.SickLeaveDTO;
+import com.cscb869.medical_record.exception.ExaminationNotFoundException;
+import com.cscb869.medical_record.exception.SickLeaveNotFoundException;
 import com.cscb869.medical_record.service.SickLeaveService;
 import com.cscb869.medical_record.util.MapperUtil;
 import lombok.RequiredArgsConstructor;
@@ -34,14 +36,14 @@ public class SickLeaveServiceImpl implements SickLeaveService {
     @Transactional(readOnly = true)
     public SickLeaveDTO getSickLeaveById(Long id) {
         SickLeave sickLeave = sickLeaveRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Sick leave not found with id: " + id));
+                .orElseThrow(() -> new SickLeaveNotFoundException("Sick leave not found with id: " + id));
         return mapperUtil.getModelMapper().map(sickLeave, SickLeaveDTO.class);
     }
 
     @Override
     public SickLeaveDTO createSickLeave(CreateSickLeaveDTO createSickLeaveDTO) {
         Examination examination = examinationRepository.findById(createSickLeaveDTO.getExaminationId())
-                .orElseThrow(() -> new RuntimeException("Examination not found"));
+                .orElseThrow(() -> new ExaminationNotFoundException("Examination not found"));
         
         SickLeave sickLeave = mapperUtil.getModelMapper().map(createSickLeaveDTO, SickLeave.class);
         sickLeave.setExamination(examination);
@@ -53,7 +55,7 @@ public class SickLeaveServiceImpl implements SickLeaveService {
     @Override
     public SickLeaveDTO updateSickLeave(Long id, CreateSickLeaveDTO createSickLeaveDTO) {
         Examination examination = examinationRepository.findById(createSickLeaveDTO.getExaminationId())
-                .orElseThrow(() -> new RuntimeException("Examination not found"));
+                .orElseThrow(() -> new ExaminationNotFoundException("Examination not found"));
         
         return sickLeaveRepository.findById(id)
                 .map(sickLeave -> {
@@ -62,13 +64,13 @@ public class SickLeaveServiceImpl implements SickLeaveService {
                     sickLeave.setDurationDays(createSickLeaveDTO.getDurationDays());
                     sickLeave.setIssueDate(createSickLeaveDTO.getIssueDate());
                     return mapperUtil.getModelMapper().map(sickLeaveRepository.save(sickLeave), SickLeaveDTO.class);
-                }).orElseThrow(() -> new RuntimeException("Sick leave not found with id: " + id));
+                }).orElseThrow(() -> new SickLeaveNotFoundException("Sick leave not found with id: " + id));
     }
 
     @Override
     public void deleteSickLeave(Long id) {
         if (!sickLeaveRepository.existsById(id)) {
-            throw new RuntimeException("Sick leave not found with id: " + id);
+            throw new SickLeaveNotFoundException("Sick leave not found with id: " + id);
         }
         sickLeaveRepository.deleteById(id);
     }

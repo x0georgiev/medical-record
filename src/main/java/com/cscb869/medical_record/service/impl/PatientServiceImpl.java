@@ -6,6 +6,8 @@ import com.cscb869.medical_record.data.repo.DoctorRepository;
 import com.cscb869.medical_record.data.repo.PatientRepository;
 import com.cscb869.medical_record.dto.CreatePatientDTO;
 import com.cscb869.medical_record.dto.PatientDTO;
+import com.cscb869.medical_record.exception.DoctorNotFoundException;
+import com.cscb869.medical_record.exception.PatientNotFoundException;
 import com.cscb869.medical_record.service.PatientService;
 import com.cscb869.medical_record.util.MapperUtil;
 import lombok.RequiredArgsConstructor;
@@ -33,14 +35,14 @@ public class PatientServiceImpl implements PatientService {
     @Transactional(readOnly = true)
     public PatientDTO getPatientById(Long id) {
         Patient patient = patientRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Patient not found with id: " + id));
+                .orElseThrow(() -> new PatientNotFoundException("Patient not found with id: " + id));
         return mapperUtil.getModelMapper().map(patient, PatientDTO.class);
     }
 
     @Override
     public PatientDTO createPatient(CreatePatientDTO createPatientDTO) {
         Doctor gp = doctorRepository.findById(createPatientDTO.getGeneralPractitionerId())
-                .orElseThrow(() -> new RuntimeException("General practitioner not found"));
+                .orElseThrow(() -> new DoctorNotFoundException("General practitioner not found"));
         
         Patient patient = mapperUtil.getModelMapper().map(createPatientDTO, Patient.class);
         patient.setGeneralPractitioner(gp);
@@ -52,7 +54,7 @@ public class PatientServiceImpl implements PatientService {
     @Override
     public PatientDTO updatePatient(Long id, CreatePatientDTO createPatientDTO) {
         Doctor gp = doctorRepository.findById(createPatientDTO.getGeneralPractitionerId())
-                .orElseThrow(() -> new RuntimeException("General practitioner not found"));
+                .orElseThrow(() -> new DoctorNotFoundException("General practitioner not found"));
         
         return patientRepository.findById(id)
                 .map(patient -> {
@@ -62,13 +64,13 @@ public class PatientServiceImpl implements PatientService {
                     patient.setLastInsurancePaymentDate(createPatientDTO.getLastInsurancePaymentDate());
                     patient.setGeneralPractitioner(gp);
                     return mapperUtil.getModelMapper().map(patientRepository.save(patient), PatientDTO.class);
-                }).orElseThrow(() -> new RuntimeException("Patient not found with id: " + id));
+                }).orElseThrow(() -> new PatientNotFoundException("Patient not found with id: " + id));
     }
 
     @Override
     public void deletePatient(Long id) {
         if (!patientRepository.existsById(id)) {
-            throw new RuntimeException("Patient not found with id: " + id);
+            throw new PatientNotFoundException("Patient not found with id: " + id);
         }
         patientRepository.deleteById(id);
     }

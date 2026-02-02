@@ -4,6 +4,7 @@ import com.cscb869.medical_record.data.entity.Doctor;
 import com.cscb869.medical_record.data.repo.DoctorRepository;
 import com.cscb869.medical_record.dto.CreateDoctorDTO;
 import com.cscb869.medical_record.dto.DoctorDTO;
+import com.cscb869.medical_record.exception.DoctorNotFoundException;
 import com.cscb869.medical_record.service.DoctorService;
 import com.cscb869.medical_record.util.MapperUtil;
 import lombok.RequiredArgsConstructor;
@@ -30,7 +31,7 @@ public class DoctorServiceImpl implements DoctorService {
     @Transactional(readOnly = true)
     public DoctorDTO getDoctorById(Long id) {
         Doctor doctor = doctorRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Doctor not found with id: " + id));
+                .orElseThrow(() -> new DoctorNotFoundException("Doctor not found with id: " + id));
         return mapperUtil.getModelMapper().map(doctor, DoctorDTO.class);
     }
 
@@ -50,13 +51,13 @@ public class DoctorServiceImpl implements DoctorService {
                     doctor.setSpecialty(createDoctorDTO.getSpecialty());
                     doctor.setGeneralPractitioner(createDoctorDTO.isGeneralPractitioner());
                     return mapperUtil.getModelMapper().map(doctorRepository.save(doctor), DoctorDTO.class);
-                }).orElseThrow(() -> new RuntimeException("Doctor not found with id: " + id));
+                }).orElseThrow(() -> new DoctorNotFoundException("Doctor not found with id: " + id));
     }
 
     @Override
     public void deleteDoctor(Long id) {
         if (!doctorRepository.existsById(id)) {
-            throw new RuntimeException("Doctor not found with id: " + id);
+            throw new DoctorNotFoundException("Doctor not found with id: " + id);
         }
         doctorRepository.deleteById(id);
     }

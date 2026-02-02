@@ -4,6 +4,7 @@ import com.cscb869.medical_record.data.entity.*;
 import com.cscb869.medical_record.data.repo.*;
 import com.cscb869.medical_record.dto.CreateExaminationDTO;
 import com.cscb869.medical_record.dto.ExaminationDTO;
+import com.cscb869.medical_record.exception.*;
 import com.cscb869.medical_record.service.ExaminationService;
 import com.cscb869.medical_record.util.MapperUtil;
 import lombok.RequiredArgsConstructor;
@@ -38,20 +39,20 @@ public class ExaminationServiceImpl implements ExaminationService {
     @Transactional(readOnly = true)
     public ExaminationDTO getExaminationById(Long id) {
         Examination examination = examinationRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Examination not found with id: " + id));
+                .orElseThrow(() -> new ExaminationNotFoundException("Examination not found with id: " + id));
         return mapperUtil.getModelMapper().map(examination, ExaminationDTO.class);
     }
 
     @Override
     public ExaminationDTO createExamination(CreateExaminationDTO createExaminationDTO) {
         Patient patient = patientRepository.findById(createExaminationDTO.getPatientId())
-                .orElseThrow(() -> new RuntimeException("Patient not found"));
+                .orElseThrow(() -> new PatientNotFoundException("Patient not found"));
         
         Doctor doctor = doctorRepository.findById(createExaminationDTO.getDoctorId())
-                .orElseThrow(() -> new RuntimeException("Doctor not found"));
+                .orElseThrow(() -> new DoctorNotFoundException("Doctor not found"));
         
         Diagnosis diagnosis = diagnosisRepository.findById(createExaminationDTO.getDiagnosisId())
-                .orElseThrow(() -> new RuntimeException("Diagnosis not found"));
+                .orElseThrow(() -> new DiagnosisNotFoundException("Diagnosis not found"));
         
         Examination examination = new Examination();
         examination.setPatient(patient);
@@ -68,7 +69,7 @@ public class ExaminationServiceImpl implements ExaminationService {
             
             createExaminationDTO.getPrescriptions().forEach(prescriptionDTO -> {
                 Medicine medicine = medicineRepository.findById(prescriptionDTO.getMedicineId())
-                        .orElseThrow(() -> new RuntimeException("Medicine not found"));
+                        .orElseThrow(() -> new MedicineNotFoundException("Medicine not found"));
                 
                 Prescription prescription = new Prescription();
                 prescription.setExamination(savedExamination);
@@ -91,13 +92,13 @@ public class ExaminationServiceImpl implements ExaminationService {
     @Override
     public ExaminationDTO updateExamination(Long id, CreateExaminationDTO createExaminationDTO) {
         Patient patient = patientRepository.findById(createExaminationDTO.getPatientId())
-                .orElseThrow(() -> new RuntimeException("Patient not found"));
+                .orElseThrow(() -> new PatientNotFoundException("Patient not found"));
         
         Doctor doctor = doctorRepository.findById(createExaminationDTO.getDoctorId())
-                .orElseThrow(() -> new RuntimeException("Doctor not found"));
+                .orElseThrow(() -> new DoctorNotFoundException("Doctor not found"));
         
         Diagnosis diagnosis = diagnosisRepository.findById(createExaminationDTO.getDiagnosisId())
-                .orElseThrow(() -> new RuntimeException("Diagnosis not found"));
+                .orElseThrow(() -> new DiagnosisNotFoundException("Diagnosis not found"));
         
         return examinationRepository.findById(id)
                 .map(examination -> {
@@ -106,13 +107,13 @@ public class ExaminationServiceImpl implements ExaminationService {
                     examination.setExaminationDate(createExaminationDTO.getExaminationDate());
                     examination.setDiagnosis(diagnosis);
                     return mapperUtil.getModelMapper().map(examinationRepository.save(examination), ExaminationDTO.class);
-                }).orElseThrow(() -> new RuntimeException("Examination not found with id: " + id));
+                }).orElseThrow(() -> new ExaminationNotFoundException("Examination not found with id: " + id));
     }
 
     @Override
     public void deleteExamination(Long id) {
         if (!examinationRepository.existsById(id)) {
-            throw new RuntimeException("Examination not found with id: " + id);
+            throw new ExaminationNotFoundException("Examination not found with id: " + id);
         }
         examinationRepository.deleteById(id);
     }
