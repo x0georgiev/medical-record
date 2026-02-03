@@ -61,13 +61,13 @@ public class ExaminationServiceImpl implements ExaminationService {
         examination.setDiagnosis(diagnosis);
         
         // Save examination first
-        Examination savedExamination = examinationRepository.save(examination);
+        final Examination savedExamination = examinationRepository.save(examination);
         
         // Create prescriptions if provided
         if (createExaminationDTO.getPrescriptions() != null && !createExaminationDTO.getPrescriptions().isEmpty()) {
             Set<Prescription> prescriptions = new HashSet<>();
             
-            createExaminationDTO.getPrescriptions().forEach(prescriptionDTO -> {
+            for (var prescriptionDTO : createExaminationDTO.getPrescriptions()) {
                 Medicine medicine = medicineRepository.findById(prescriptionDTO.getMedicineId())
                         .orElseThrow(() -> new MedicineNotFoundException("Medicine not found"));
                 
@@ -80,10 +80,10 @@ public class ExaminationServiceImpl implements ExaminationService {
                 prescription.setInstructions(prescriptionDTO.getInstructions());
                 
                 prescriptions.add(prescription);
-            });
+            }
             
             savedExamination.setPrescriptions(prescriptions);
-            savedExamination = examinationRepository.save(savedExamination);
+            examinationRepository.save(savedExamination);
         }
         
         return mapperUtil.getModelMapper().map(savedExamination, ExaminationDTO.class);
