@@ -65,7 +65,7 @@ public class DoctorServiceImpl implements DoctorService {
     @Override
     @Transactional(readOnly = true)
     public List<DoctorDTO> getGeneralPractitioners() {
-        return mapperUtil.mapList(doctorRepository.findByIsGeneralPractitionerTrue(), DoctorDTO.class);
+        return mapperUtil.mapList(doctorRepository.findByGeneralPractitionerTrue(), DoctorDTO.class);
     }
 
     @Override

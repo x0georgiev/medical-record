@@ -25,7 +25,7 @@ public interface PatientRepository extends JpaRepository<Patient, Long> {
     @Query("SELECT gp.id, gp.name, COUNT(p.id) as patientCount " +
            "FROM Doctor gp " +
            "LEFT JOIN Patient p ON p.generalPractitioner.id = gp.id " +
-           "WHERE gp.isGeneralPractitioner = true " +
+           "WHERE gp.generalPractitioner = true " +
            "GROUP BY gp.id, gp.name " +
            "ORDER BY patientCount DESC")
     List<Object[]> getPatientCountPerGeneralPractitioner();

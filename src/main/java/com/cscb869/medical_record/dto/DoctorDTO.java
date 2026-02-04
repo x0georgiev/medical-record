@@ -1,5 +1,6 @@
 package com.cscb869.medical_record.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
 @Getter
@@ -12,5 +13,6 @@ public class DoctorDTO {
     private String uniqueIdentifier;
     private String name;
     private String specialty;
-    private boolean isGeneralPractitioner;
+    @JsonProperty("generalPractitioner")
+    private boolean generalPractitioner;
 }

@@ -1,5 +1,6 @@
 package com.cscb869.medical_record.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.*;
@@ -24,5 +25,6 @@ public class CreateDoctorDTO {
     @Size(max = 100, message = "Specialty must not exceed 100 characters")
     private String specialty;
 
-    private boolean isGeneralPractitioner;
+    @JsonProperty("generalPractitioner")
+    private boolean generalPractitioner;
 }

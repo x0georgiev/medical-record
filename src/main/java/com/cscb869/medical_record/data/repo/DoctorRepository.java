@@ -12,7 +12,7 @@ public interface DoctorRepository extends JpaRepository<Doctor, Long> {
 
     Doctor findByUniqueIdentifier(String uniqueIdentifier);
 
-    List<Doctor> findByIsGeneralPractitionerTrue();
+    List<Doctor> findByGeneralPractitionerTrue();
 
     // Report: Get count of visits (examinations) for each doctor
     @Query("SELECT d.id, d.name, COUNT(e.id) as visitCount " +

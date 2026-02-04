@@ -33,7 +33,7 @@ public class Doctor extends BaseEntity {
     private String specialty;
 
     @Column(name = "is_general_practitioner", nullable = false)
-    private boolean isGeneralPractitioner;
+    private boolean generalPractitioner;
 
     // Patients who have this doctor as their GP
     @OneToMany(mappedBy = "generalPractitioner")
