@@ -38,7 +38,7 @@ class DoctorApiControllerTest {
     private DoctorService doctorService;
 
     @Test
-    @WithMockUser
+    @WithMockUser(roles = "ADMIN")
     void getAllDoctorsTest() throws Exception {
         DoctorDTO doctor1 = new DoctorDTO();
         doctor1.setId(1L);
@@ -69,7 +69,7 @@ class DoctorApiControllerTest {
     }
 
     @Test
-    @WithMockUser
+    @WithMockUser(roles = "ADMIN")
     void getDoctorByIdTest() throws Exception {
         DoctorDTO doctor = new DoctorDTO();
         doctor.setId(1L);
@@ -91,7 +91,7 @@ class DoctorApiControllerTest {
     }
 
     @Test
-    @WithMockUser
+    @WithMockUser(roles = "ADMIN")
     void createDoctorTest() throws Exception {
         CreateDoctorDTO createDTO = new CreateDoctorDTO();
         createDTO.setUniqueIdentifier("DOC-003");
@@ -119,7 +119,7 @@ class DoctorApiControllerTest {
     }
 
     @Test
-    @WithMockUser
+    @WithMockUser(roles = "ADMIN")
     void updateDoctorTest() throws Exception {
         CreateDoctorDTO updateDTO = new CreateDoctorDTO();
         updateDTO.setUniqueIdentifier("DOC-001");
@@ -147,7 +147,7 @@ class DoctorApiControllerTest {
     }
 
     @Test
-    @WithMockUser
+    @WithMockUser(roles = "ADMIN")
     void deleteDoctorTest() throws Exception {
         doNothing().when(doctorService).deleteDoctor(1L);
 
@@ -158,7 +158,7 @@ class DoctorApiControllerTest {
     }
 
     @Test
-    @WithMockUser
+    @WithMockUser(roles = "ADMIN")
     void getGeneralPractitionersTest() throws Exception {
         DoctorDTO gp1 = new DoctorDTO();
         gp1.setId(1L);

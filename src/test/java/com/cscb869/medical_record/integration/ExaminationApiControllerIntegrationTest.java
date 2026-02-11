@@ -32,7 +32,7 @@ class ExaminationApiControllerIntegrationTest {
     }
 
     @Test
-    @WithMockUser
+    @WithMockUser(roles = "ADMIN")
     void getAllExaminationsStatusOk() throws Exception {
         mvc.perform(get("/api/examinations")
                         .contentType(MediaType.APPLICATION_JSON))
@@ -42,7 +42,7 @@ class ExaminationApiControllerIntegrationTest {
     }
 
     @Test
-    @WithMockUser
+    @WithMockUser(roles = "ADMIN")
     void getExaminationByIdStatusOk() throws Exception {
         mvc.perform(get("/api/examinations/{id}", 1L)
                         .contentType(MediaType.APPLICATION_JSON))
@@ -53,7 +53,7 @@ class ExaminationApiControllerIntegrationTest {
     }
 
     @Test
-    @WithMockUser
+    @WithMockUser(roles = "ADMIN")
     void getExaminationsByPatientStatusOk() throws Exception {
         mvc.perform(get("/api/examinations/patient/{patientId}", 1L)
                         .contentType(MediaType.APPLICATION_JSON))
@@ -63,7 +63,7 @@ class ExaminationApiControllerIntegrationTest {
     }
 
     @Test
-    @WithMockUser
+    @WithMockUser(roles = "ADMIN")
     void getExaminationsByDoctorStatusOk() throws Exception {
         mvc.perform(get("/api/examinations/doctor/{doctorId}", 1L)
                         .contentType(MediaType.APPLICATION_JSON))
@@ -73,7 +73,7 @@ class ExaminationApiControllerIntegrationTest {
     }
 
     @Test
-    @WithMockUser
+    @WithMockUser(roles = "ADMIN")
     void getExaminationsByDateRangeStatusOk() throws Exception {
         mvc.perform(get("/api/examinations/date-range")
                         .param("startDate", "2025-01-01")
@@ -85,7 +85,7 @@ class ExaminationApiControllerIntegrationTest {
     }
 
     @Test
-    @WithMockUser
+    @WithMockUser(roles = "ADMIN")
     void getExaminationByIdNotFound() throws Exception {
         mvc.perform(get("/api/examinations/{id}", 9999L)
                         .contentType(MediaType.APPLICATION_JSON))

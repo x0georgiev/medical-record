@@ -9,11 +9,11 @@ INSERT IGNORE INTO roles (id, authority) VALUES (3, 'ROLE_PATIENT');
 
 -- Users (password is BCrypt encoded 'password123')
 INSERT IGNORE INTO users (id, username, password, account_non_expired, account_non_locked, credentials_non_expired, enabled) 
-VALUES (1, 'admin', '$2a$10$N9qo8uLOickgx2ZMRZoMy.MqrqJL0kHHnK5T4Ks7x5x5x5x5x5x5x', true, true, true, true);
+VALUES (1, 'admin', '$2a$10$l1tIz8WVyoz63xKxfcnBOudaq30.JDGdpC1PuOmOQVssf2yzHbp2G', true, true, true, true);
 INSERT IGNORE INTO users (id, username, password, account_non_expired, account_non_locked, credentials_non_expired, enabled) 
-VALUES (2, 'doctor1', '$2a$10$N9qo8uLOickgx2ZMRZoMy.MqrqJL0kHHnK5T4Ks7x5x5x5x5x5x5x', true, true, true, true);
+VALUES (2, 'doctor1', '$2a$10$l1tIz8WVyoz63xKxfcnBOudaq30.JDGdpC1PuOmOQVssf2yzHbp2G', true, true, true, true);
 INSERT IGNORE INTO users (id, username, password, account_non_expired, account_non_locked, credentials_non_expired, enabled) 
-VALUES (3, 'patient1', '$2a$10$N9qo8uLOickgx2ZMRZoMy.MqrqJL0kHHnK5T4Ks7x5x5x5x5x5x5x', true, true, true, true);
+VALUES (3, 'patient1', '$2a$10$l1tIz8WVyoz63xKxfcnBOudaq30.JDGdpC1PuOmOQVssf2yzHbp2G', true, true, true, true);
 
 -- User-Role assignments
 INSERT IGNORE INTO user_roles (user_id, role_id) VALUES (1, 1);

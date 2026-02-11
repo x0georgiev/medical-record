@@ -4,7 +4,7 @@ import com.cscb869.medical_record.dto.CreatePatientDTO;
 import com.cscb869.medical_record.dto.PatientDTO;
 import com.cscb869.medical_record.service.PatientService;
 import com.cscb869.medical_record.web.api.PatientApiController;
-import tools.jackson.databind.ObjectMapper;
+import tools.jackson.databind.json.JsonMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.webmvc.test.autoconfigure.WebMvcTest;
@@ -31,14 +31,13 @@ class PatientApiControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
-    @Autowired
-    private ObjectMapper objectMapper;
+    private final JsonMapper jsonMapper = JsonMapper.builder().build();
 
     @MockitoBean
     private PatientService patientService;
 
     @Test
-    @WithMockUser
+    @WithMockUser(roles = "ADMIN")
     void getAllPatientsTest() throws Exception {
         PatientDTO patient1 = new PatientDTO();
         patient1.setId(1L);
@@ -66,7 +65,7 @@ class PatientApiControllerTest {
     }
 
     @Test
-    @WithMockUser
+    @WithMockUser(roles = "ADMIN")
     void getPatientByIdTest() throws Exception {
         PatientDTO patient = new PatientDTO();
         patient.setId(1L);
@@ -89,7 +88,7 @@ class PatientApiControllerTest {
     }
 
     @Test
-    @WithMockUser
+    @WithMockUser(roles = "ADMIN")
     void createPatientTest() throws Exception {
         CreatePatientDTO createDTO = new CreatePatientDTO();
         createDTO.setName("New Patient");
@@ -109,7 +108,7 @@ class PatientApiControllerTest {
         mockMvc.perform(post("/api/patients")
                         .with(csrf())
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(createDTO)))
+                        .content(jsonMapper.writeValueAsString(createDTO)))
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.id", is(10)))
                 .andExpect(jsonPath("$.name", is("New Patient")))
@@ -117,7 +116,7 @@ class PatientApiControllerTest {
     }
 
     @Test
-    @WithMockUser
+    @WithMockUser(roles = "ADMIN")
     void getPatientsByGeneralPractitionerTest() throws Exception {
         PatientDTO patient1 = new PatientDTO();
         patient1.setId(1L);
@@ -141,7 +140,7 @@ class PatientApiControllerTest {
     }
 
     @Test
-    @WithMockUser
+    @WithMockUser(roles = "ADMIN")
     void getPatientsByDiagnosisTest() throws Exception {
         PatientDTO patient1 = new PatientDTO();
         patient1.setId(1L);

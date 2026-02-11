@@ -32,7 +32,7 @@ class DoctorApiControllerIntegrationTest {
     }
 
     @Test
-    @WithMockUser
+    @WithMockUser(roles = "ADMIN")
     void getAllDoctorsStatusOk() throws Exception {
         mvc.perform(get("/api/doctors")
                         .contentType(MediaType.APPLICATION_JSON))
@@ -42,7 +42,7 @@ class DoctorApiControllerIntegrationTest {
     }
 
     @Test
-    @WithMockUser
+    @WithMockUser(roles = "ADMIN")
     void getDoctorByIdStatusOk() throws Exception {
         mvc.perform(get("/api/doctors/{id}", 1L)
                         .contentType(MediaType.APPLICATION_JSON))
@@ -54,7 +54,7 @@ class DoctorApiControllerIntegrationTest {
     }
 
     @Test
-    @WithMockUser
+    @WithMockUser(roles = "ADMIN")
     void getGeneralPractitionersStatusOk() throws Exception {
         mvc.perform(get("/api/doctors/general-practitioners")
                         .contentType(MediaType.APPLICATION_JSON))
@@ -64,7 +64,7 @@ class DoctorApiControllerIntegrationTest {
     }
 
     @Test
-    @WithMockUser
+    @WithMockUser(roles = "ADMIN")
     void getDoctorByIdNotFound() throws Exception {
         mvc.perform(get("/api/doctors/{id}", 9999L)
                         .contentType(MediaType.APPLICATION_JSON))

@@ -30,7 +30,7 @@ class ExaminationApiControllerTest {
     private ExaminationService examinationService;
 
     @Test
-    @WithMockUser
+    @WithMockUser(roles = "ADMIN")
     void getAllExaminationsTest() throws Exception {
         ExaminationDTO exam1 = new ExaminationDTO();
         exam1.setId(1L);
@@ -67,7 +67,7 @@ class ExaminationApiControllerTest {
     }
 
     @Test
-    @WithMockUser
+    @WithMockUser(roles = "ADMIN")
     void getExaminationByIdTest() throws Exception {
         ExaminationDTO exam = new ExaminationDTO();
         exam.setId(1L);
@@ -91,7 +91,7 @@ class ExaminationApiControllerTest {
     }
 
     @Test
-    @WithMockUser
+    @WithMockUser(roles = "ADMIN")
     void getExaminationsByPatientTest() throws Exception {
         ExaminationDTO exam1 = new ExaminationDTO();
         exam1.setId(1L);
@@ -117,7 +117,7 @@ class ExaminationApiControllerTest {
     }
 
     @Test
-    @WithMockUser
+    @WithMockUser(roles = "ADMIN")
     void getExaminationsByDateRangeTest() throws Exception {
         ExaminationDTO exam1 = new ExaminationDTO();
         exam1.setId(1L);
@@ -144,7 +144,7 @@ class ExaminationApiControllerTest {
     }
 
     @Test
-    @WithMockUser
+    @WithMockUser(roles = "ADMIN")
     void getExaminationsByDoctorTest() throws Exception {
         ExaminationDTO exam1 = new ExaminationDTO();
         exam1.setId(1L);
