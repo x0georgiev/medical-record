@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments :: head"></head>
+<body>
+<nav th:replace="fragments :: navigation"></nav>
+<div class="container mt-4">
+    <h1>Medical Record System</h1>
+    <h3 th:text="'Hello and ' + ${welcome}"></h3>
+    <hr>
+    <div class="row">
+        <div class="col-md-4 mb-3">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Doctors</h5>
+                    <p class="card-text">Manage doctors and specialists</p>
+                    <a href="/doctors" class="btn btn-primary">View Doctors</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-3">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Patients</h5>
+                    <p class="card-text">Manage patient records</p>
+                    <a href="/patients" class="btn btn-primary">View Patients</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-3">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Examinations</h5>
+                    <p class="card-text">View examination records</p>
+                    <a href="/examinations" class="btn btn-primary">View Examinations</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-3">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Diagnoses</h5>
+                    <p class="card-text">Manage diagnoses catalog</p>
+                    <a href="/diagnoses" class="btn btn-primary">View Diagnoses</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-3">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Medicines</h5>
+                    <p class="card-text">Manage medicine catalog</p>
+                    <a href="/medicines" class="btn btn-primary">View Medicines</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-3">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Sick Leaves</h5>
+                    <p class="card-text">View sick leave records</p>
+                    <a href="/sick-leaves" class="btn btn-primary">View Sick Leaves</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<footer th:replace="fragments :: footer"></footer>
+</body>
+</html>

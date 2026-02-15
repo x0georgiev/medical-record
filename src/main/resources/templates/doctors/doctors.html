@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments :: head"></head>
+<body>
+<nav th:replace="fragments :: navigation"></nav>
+<div class="container mt-4">
+    <h4>Doctors</h4>
+    <a class="btn btn-success mb-3" href="/doctors/create-doctor">Add Doctor</a>
+    <div class="col-8">
+        <h5 th:unless="${doctors} and ${doctors.size()}">There are no doctors!</h5>
+        <table th:if="${doctors.size() > 0}" class="table table-hover">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Unique Identifier</th>
+                    <th>Name</th>
+                    <th>Specialty</th>
+                    <th>GP</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="doctor : ${doctors}">
+                    <td th:text="${doctor.id}"></td>
+                    <td th:text="${doctor.uniqueIdentifier}"></td>
+                    <td th:text="${doctor.name}"></td>
+                    <td th:text="${doctor.specialty}"></td>
+                    <td th:text="${doctor.generalPractitioner} ? 'Yes' : 'No'"></td>
+                    <td><a class="btn btn-info btn-sm" th:href="@{'/doctors/edit-doctor/' + ${doctor.id}}">Edit</a></td>
+                    <td><a class="btn btn-danger btn-sm" th:href="@{'/doctors/delete/' + ${doctor.id}}">Delete</a></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<footer th:replace="fragments :: footer"></footer>
+</body>
+</html>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments :: head"></head>
+<body>
+<nav th:replace="fragments :: navigation"></nav>
+<div class="container mt-4">
+    <h4>Create Medicine</h4>
+    <div class="col-6">
+        <form action="#" th:action="@{/medicines/create}" th:object="${medicine}" method="post">
+            <div class="mb-3">
+                <label for="name" class="form-label">Name</label>
+                <input class="form-control" type="text" th:field="*{name}" id="name">
+                <span class="text-danger" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
+            </div>
+            <div class="mb-3">
+                <label for="description" class="form-label">Description</label>
+                <textarea class="form-control" th:field="*{description}" id="description" rows="3"></textarea>
+            </div>
+            <div class="mb-3">
+                <label for="manufacturer" class="form-label">Manufacturer</label>
+                <input class="form-control" type="text" th:field="*{manufacturer}" id="manufacturer">
+            </div>
+            <button type="submit" class="btn btn-primary">Save Medicine</button>
+            <a href="/medicines" class="btn btn-secondary">Cancel</a>
+        </form>
+    </div>
+</div>
+<footer th:replace="fragments :: footer"></footer>
+</body>
+</html>

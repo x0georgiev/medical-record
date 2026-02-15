@@ -8,26 +8,26 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
  * Global exception handler for web/view layer (Thymeleaf)
  * Handles exceptions and returns error view pages
  */
-@ControllerAdvice
+@ControllerAdvice(basePackages = "com.cscb869.medical_record.web.view")
 public class ExceptionsHandler {
 
-//    @ExceptionHandler(Exception.class)
-//    protected String handleException(Exception exception, Model model) {
-//        model.addAttribute("message", exception.getMessage());
-//        return "/errors/errors";
-//    }
-//
-//    @ExceptionHandler({
-//        DoctorNotFoundException.class,
-//        PatientNotFoundException.class,
-//        DiagnosisNotFoundException.class,
-//        ExaminationNotFoundException.class,
-//        MedicineNotFoundException.class,
-//        PrescriptionNotFoundException.class,
-//        SickLeaveNotFoundException.class
-//    })
-//    public String handleNotFoundException(RuntimeException exception, Model model) {
-//        model.addAttribute("message", exception.getMessage());
-//        return "/errors/not-found-errors";
-//    }
+    @ExceptionHandler(Exception.class)
+    protected String handleException(Exception exception, Model model) {
+        model.addAttribute("message", exception.getMessage());
+        return "/errors/errors";
+    }
+
+    @ExceptionHandler({
+        DoctorNotFoundException.class,
+        PatientNotFoundException.class,
+        DiagnosisNotFoundException.class,
+        ExaminationNotFoundException.class,
+        MedicineNotFoundException.class,
+        PrescriptionNotFoundException.class,
+        SickLeaveNotFoundException.class
+    })
+    public String handleNotFoundException(RuntimeException exception, Model model) {
+        model.addAttribute("message", exception.getMessage());
+        return "/errors/not-found-errors";
+    }
 }

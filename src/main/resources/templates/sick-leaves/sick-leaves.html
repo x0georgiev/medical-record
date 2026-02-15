@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments :: head"></head>
+<body>
+<nav th:replace="fragments :: navigation"></nav>
+<div class="container mt-4">
+    <h4>Sick Leaves</h4>
+    <a class="btn btn-success mb-3" href="/sick-leaves/create-sick-leave">Add Sick Leave</a>
+    <div class="col-10">
+        <h5 th:unless="${sickLeaves} and ${sickLeaves.size()}">There are no sick leaves!</h5>
+        <table th:if="${sickLeaves.size() > 0}" class="table table-hover">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Examination ID</th>
+                    <th>Start Date</th>
+                    <th>Duration (days)</th>
+                    <th>End Date</th>
+                    <th>Issue Date</th>
+                    <th>Delete</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="sl : ${sickLeaves}">
+                    <td th:text="${sl.id}"></td>
+                    <td th:text="${sl.examinationId}"></td>
+                    <td th:text="${sl.startDate}"></td>
+                    <td th:text="${sl.durationDays}"></td>
+                    <td th:text="${sl.endDate}"></td>
+                    <td th:text="${sl.issueDate}"></td>
+                    <td><a class="btn btn-danger btn-sm" th:href="@{'/sick-leaves/delete/' + ${sl.id}}">Delete</a></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<footer th:replace="fragments :: footer"></footer>
+</body>
+</html>

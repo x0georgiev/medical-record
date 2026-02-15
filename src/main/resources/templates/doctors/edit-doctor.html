@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments :: head"></head>
+<body>
+<nav th:replace="fragments :: navigation"></nav>
+<div class="container mt-4">
+    <h4>Edit Doctor</h4>
+    <div class="col-6">
+        <form action="#" th:action="@{/doctors/update/{id}(id=${doctorId})}" th:object="${doctor}" method="post">
+            <div class="mb-3">
+                <label for="uniqueIdentifier" class="form-label">Unique Identifier</label>
+                <input class="form-control" type="text" th:field="*{uniqueIdentifier}" id="uniqueIdentifier">
+                <span class="text-danger" th:if="${#fields.hasErrors('uniqueIdentifier')}" th:errors="*{uniqueIdentifier}"></span>
+            </div>
+            <div class="mb-3">
+                <label for="name" class="form-label">Name</label>
+                <input class="form-control" type="text" th:field="*{name}" id="name">
+                <span class="text-danger" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
+            </div>
+            <div class="mb-3">
+                <label for="specialty" class="form-label">Specialty</label>
+                <input class="form-control" type="text" th:field="*{specialty}" id="specialty">
+                <span class="text-danger" th:if="${#fields.hasErrors('specialty')}" th:errors="*{specialty}"></span>
+            </div>
+            <div class="mb-3 form-check">
+                <input class="form-check-input" type="checkbox" th:field="*{generalPractitioner}" id="generalPractitioner">
+                <label class="form-check-label" for="generalPractitioner">General Practitioner</label>
+            </div>
+            <button type="submit" class="btn btn-primary">Update Doctor</button>
+            <a href="/doctors" class="btn btn-secondary">Cancel</a>
+        </form>
+    </div>
+</div>
+<footer th:replace="fragments :: footer"></footer>
+</body>
+</html>

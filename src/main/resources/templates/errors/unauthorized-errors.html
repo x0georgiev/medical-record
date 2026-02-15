@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments :: head"></head>
+<body>
+<nav th:replace="fragments :: navigation"></nav>
+<div class="container mt-4">
+    <h1>Unauthorized Access!</h1>
+    <p class="text-danger" th:text="${message}"></p>
+    <a href="/" class="btn btn-primary">Go Home</a>
+</div>
+<footer th:replace="fragments :: footer"></footer>
+</body>
+</html>

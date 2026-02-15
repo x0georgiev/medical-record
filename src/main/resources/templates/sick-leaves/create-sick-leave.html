@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments :: head"></head>
+<body>
+<nav th:replace="fragments :: navigation"></nav>
+<div class="container mt-4">
+    <h4>Create Sick Leave</h4>
+    <div class="col-6">
+        <form action="#" th:action="@{/sick-leaves/create}" th:object="${sickLeave}" method="post">
+            <div class="mb-3">
+                <label for="examinationId" class="form-label">Examination</label>
+                <select class="form-select" th:field="*{examinationId}" id="examinationId">
+                    <option value="">-- Select Examination --</option>
+                    <option th:each="exam : ${examinations}"
+                            th:value="${exam.id}"
+                            th:text="${'#' + exam.id + ' - ' + exam.patientName + ' (' + exam.examinationDate + ')'}"></option>
+                </select>
+                <span class="text-danger" th:if="${#fields.hasErrors('examinationId')}" th:errors="*{examinationId}"></span>
+            </div>
+            <div class="mb-3">
+                <label for="startDate" class="form-label">Start Date</label>
+                <input class="form-control" type="date" th:field="*{startDate}" id="startDate">
+                <span class="text-danger" th:if="${#fields.hasErrors('startDate')}" th:errors="*{startDate}"></span>
+            </div>
+            <div class="mb-3">
+                <label for="durationDays" class="form-label">Duration (days)</label>
+                <input class="form-control" type="number" th:field="*{durationDays}" id="durationDays" min="1">
+                <span class="text-danger" th:if="${#fields.hasErrors('durationDays')}" th:errors="*{durationDays}"></span>
+            </div>
+            <div class="mb-3">
+                <label for="issueDate" class="form-label">Issue Date</label>
+                <input class="form-control" type="date" th:field="*{issueDate}" id="issueDate">
+                <span class="text-danger" th:if="${#fields.hasErrors('issueDate')}" th:errors="*{issueDate}"></span>
+            </div>
+            <button type="submit" class="btn btn-primary">Save Sick Leave</button>
+            <a href="/sick-leaves" class="btn btn-secondary">Cancel</a>
+        </form>
+    </div>
+</div>
+<footer th:replace="fragments :: footer"></footer>
+</body>
+</html>

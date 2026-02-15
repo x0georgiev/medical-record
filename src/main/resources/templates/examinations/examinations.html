@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments :: head"></head>
+<body>
+<nav th:replace="fragments :: navigation"></nav>
+<div class="container mt-4">
+    <h4>Examinations</h4>
+    <a class="btn btn-success mb-3" href="/examinations/create-examination">Add Examination</a>
+    <div class="col-12">
+        <h5 th:unless="${examinations} and ${examinations.size()}">There are no examinations!</h5>
+        <table th:if="${examinations.size() > 0}" class="table table-hover">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Date</th>
+                    <th>Patient</th>
+                    <th>Doctor</th>
+                    <th>Diagnosis</th>
+                    <th>Delete</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="exam : ${examinations}">
+                    <td th:text="${exam.id}"></td>
+                    <td th:text="${exam.examinationDate}"></td>
+                    <td th:text="${exam.patientName}"></td>
+                    <td th:text="${exam.doctorName}"></td>
+                    <td th:text="${exam.diagnosisName}"></td>
+                    <td><a class="btn btn-danger btn-sm" th:href="@{'/examinations/delete/' + ${exam.id}}">Delete</a></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<footer th:replace="fragments :: footer"></footer>
+</body>
+</html>

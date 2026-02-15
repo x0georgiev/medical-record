@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments :: head"></head>
+<body>
+<nav th:replace="fragments :: navigation"></nav>
+<div class="container mt-4">
+    <h4>Create Examination</h4>
+    <div class="col-6">
+        <form action="#" th:action="@{/examinations/create}" th:object="${examination}" method="post">
+            <div class="mb-3">
+                <label for="patientId" class="form-label">Patient</label>
+                <select class="form-select" th:field="*{patientId}" id="patientId">
+                    <option value="">-- Select Patient --</option>
+                    <option th:each="patient : ${patients}" th:value="${patient.id}" th:text="${patient.name}"></option>
+                </select>
+                <span class="text-danger" th:if="${#fields.hasErrors('patientId')}" th:errors="*{patientId}"></span>
+            </div>
+            <div class="mb-3">
+                <label for="doctorId" class="form-label">Doctor</label>
+                <select class="form-select" th:field="*{doctorId}" id="doctorId">
+                    <option value="">-- Select Doctor --</option>
+                    <option th:each="doctor : ${doctors}" th:value="${doctor.id}" th:text="${doctor.name}"></option>
+                </select>
+                <span class="text-danger" th:if="${#fields.hasErrors('doctorId')}" th:errors="*{doctorId}"></span>
+            </div>
+            <div class="mb-3">
+                <label for="examinationDate" class="form-label">Examination Date</label>
+                <input class="form-control" type="date" th:field="*{examinationDate}" id="examinationDate">
+                <span class="text-danger" th:if="${#fields.hasErrors('examinationDate')}" th:errors="*{examinationDate}"></span>
+            </div>
+            <div class="mb-3">
+                <label for="diagnosisId" class="form-label">Diagnosis</label>
+                <select class="form-select" th:field="*{diagnosisId}" id="diagnosisId">
+                    <option value="">-- Select Diagnosis --</option>
+                    <option th:each="diagnosis : ${diagnoses}" th:value="${diagnosis.id}" th:text="${diagnosis.code + ' - ' + diagnosis.name}"></option>
+                </select>
+                <span class="text-danger" th:if="${#fields.hasErrors('diagnosisId')}" th:errors="*{diagnosisId}"></span>
+            </div>
+            <button type="submit" class="btn btn-primary">Save Examination</button>
+            <a href="/examinations" class="btn btn-secondary">Cancel</a>
+        </form>
+    </div>
+</div>
+<footer th:replace="fragments :: footer"></footer>
+</body>
+</html>

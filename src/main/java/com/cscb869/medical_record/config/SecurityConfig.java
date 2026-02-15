@@ -43,10 +43,8 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
             .authorizeHttpRequests(authorize -> authorize
-                // Public endpoints
-                .requestMatchers("/", "/index", "/login", "/error", "/css/**", "/js/**").permitAll()
-                // API endpoints - role-based access handled by @PreAuthorize annotations
-                .requestMatchers("/api/**").authenticated()
+                // Public endpoints (login page and static resources only)
+                .requestMatchers("/login", "/error", "/css/**", "/js/**").permitAll()
                 // All other requests require authentication
                 .anyRequest().authenticated()
             )

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments :: head"></head>
+<body>
+<nav th:replace="fragments :: navigation"></nav>
+<div class="container mt-4">
+    <h4>Edit Diagnosis</h4>
+    <div class="col-6">
+        <form action="#" th:action="@{/diagnoses/update/{id}(id=${diagnosisId})}" th:object="${diagnosis}" method="post">
+            <div class="mb-3">
+                <label for="code" class="form-label">Code</label>
+                <input class="form-control" type="text" th:field="*{code}" id="code">
+                <span class="text-danger" th:if="${#fields.hasErrors('code')}" th:errors="*{code}"></span>
+            </div>
+            <div class="mb-3">
+                <label for="name" class="form-label">Name</label>
+                <input class="form-control" type="text" th:field="*{name}" id="name">
+                <span class="text-danger" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
+            </div>
+            <div class="mb-3">
+                <label for="description" class="form-label">Description</label>
+                <textarea class="form-control" th:field="*{description}" id="description" rows="3"></textarea>
+                <span class="text-danger" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></span>
+            </div>
+            <button type="submit" class="btn btn-primary">Update Diagnosis</button>
+            <a href="/diagnoses" class="btn btn-secondary">Cancel</a>
+        </form>
+    </div>
+</div>
+<footer th:replace="fragments :: footer"></footer>
+</body>
+</html>

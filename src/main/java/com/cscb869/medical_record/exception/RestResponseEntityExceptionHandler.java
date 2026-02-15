@@ -15,7 +15,7 @@ import org.springframework.security.core.AuthenticationException;
  * Global exception handler for REST API layer
  * Handles exceptions and returns simple string responses
  */
-@RestControllerAdvice
+@RestControllerAdvice(basePackages = "com.cscb869.medical_record.web.api")
 public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler({AuthenticationException.class})
